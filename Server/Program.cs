@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using DOOR.Server.Data;
 using DOOR.Server.Models;
+using DOOR.EF.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ var connectionString = builder.Configuration.GetConnectionString("DoorConnection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseOracle(connectionString));
 
+builder.Services.AddDbContext<DOOROracleContext>(options =>
+    options.UseOracle(connectionString));
 
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

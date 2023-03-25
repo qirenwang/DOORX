@@ -1,0 +1,5 @@
+add-migration initial
+
+update-database
+
+Scaffold-DbContext "Data Source=3.80.81.224:1521/SPRING2023PDB;User ID=DOOR;Password=DOORPW"Oracle.EntityFrameworkCore -OutputDir Models -ContextDir Data -Project "DOOR.EF"  -Context "DOOROracleContext" -DataAnnotations -NoOnConfiguring -Force
