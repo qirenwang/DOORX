@@ -27,6 +27,7 @@ namespace DOOR.EF.Data
         public virtual DbSet<DeviceCode> DeviceCodes { get; set; } = null!;
         public virtual DbSet<Enrollment> Enrollments { get; set; } = null!;
         public virtual DbSet<Key> Keys { get; set; } = null!;
+        public virtual DbSet<OraTranslateMsg> OraTranslateMsgs { get; set; } = null!;
         public virtual DbSet<PersistedGrant> PersistedGrants { get; set; } = null!;
         public virtual DbSet<Section> Sections { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
@@ -111,6 +112,11 @@ namespace DOOR.EF.Data
                     .HasForeignKey(d => d.StudentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("ENR_STU_FK");
+            });
+
+            modelBuilder.Entity<OraTranslateMsg>(entity =>
+            {
+                entity.Property(e => e.OraTranslateMsgId).HasDefaultValueSql("sys_guid()");
             });
 
             modelBuilder.Entity<Section>(entity =>

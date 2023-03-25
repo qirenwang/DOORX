@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DOOR.EF.Models
 {
     [Table("COURSE")]
+    [Index("Description", Name = "COURSE_UK1", IsUnique = true)]
     [Index("Prerequisite", Name = "CRSE_CRSE_FK_I")]
     public partial class Course
     {
@@ -29,22 +30,12 @@ namespace DOOR.EF.Models
         [Column("PREREQUISITE")]
         [Precision(8)]
         public int? Prerequisite { get; set; }
-
-
         [Column("CREATED_BY")]
         [StringLength(30)]
         [Unicode(false)]
         public string CreatedBy { get; set; } = null!;
-
-
-
-
         [Column("CREATED_DATE", TypeName = "DATE")]
         public DateTime CreatedDate { get; set; }
-
-
-
-
         [Column("MODIFIED_BY")]
         [StringLength(30)]
         [Unicode(false)]
