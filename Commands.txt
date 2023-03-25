@@ -1,11 +1,11 @@
 
 --	This command does the CODE FIRST migration 
 
-add-migration initial - Context DOOROracleContext
+add-migration initial -Context ApplicationDbContext
 
 --	This command executes the database update based on what was created in CODE FIRST
-update-database - Context DOOROracleContext
+update-database -Context ApplicationDbContext
 
 
 --	This command executes the DATABASE FIRST migration
-Scaffold-DbContext "Data Source=3.80.81.224:1521/SPRING2023PDB;User ID=DOOR;Password=DOORPW"Oracle.EntityFrameworkCore -OutputDir Models -ContextDir Data -Project "DOOR.EF"  -Context "DOOROracleContext" -DataAnnotations -NoOnConfiguring -Force
+Scaffold-DbContext "Data Source=3.80.81.224:1521/SPRING2023PDB;User ID=DOOR_USER;Password=DOORPW"Oracle.EntityFrameworkCore -OutputDir Models -ContextDir Data -Project "DOOR.EF"  -Context "DOOROracleContext" -DataAnnotations -NoOnConfiguring -Force

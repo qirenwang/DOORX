@@ -19,7 +19,7 @@ namespace DOOR.Server.Data
         {
             base.OnModelCreating(builder);
 
-            builder.HasDefaultSchema("DOOR")
+            builder.HasDefaultSchema("DOOR_USER")
                 .HasAnnotation("Relational:Collation", "USING_NLS_COMP");
 
             builder.ToUpperCaseTables();

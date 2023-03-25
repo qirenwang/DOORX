@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DOOR.EF.Models
 {
     [Table("STUDENT")]
+    [Index("StudentId", Name = "STU_PK", IsUnique = true)]
     [Index("Zip", Name = "STU_ZIP_FK_I")]
     public partial class Student
     {
@@ -61,8 +62,15 @@ namespace DOOR.EF.Models
         public string ModifiedBy { get; set; } = null!;
         [Column("MODIFIED_DATE", TypeName = "DATE")]
         public DateTime ModifiedDate { get; set; }
+        [Key]
+        [Column("SCHOOL_ID")]
+        [Precision(8)]
+        public int SchoolId { get; set; }
 
-        [InverseProperty("Student")]
+        [ForeignKey("SchoolId")]
+        [InverseProperty("Students")]
+        public virtual School School { get; set; } = null!;
+        [InverseProperty("SNavigation")]
         public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
 }

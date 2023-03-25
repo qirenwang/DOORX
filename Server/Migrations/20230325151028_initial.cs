@@ -10,11 +10,11 @@ namespace DOOR.Server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "DOOR");
+                name: "DOOR_USER");
 
             migrationBuilder.CreateTable(
                 name: "ASP_NET_ROLES",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 columns: table => new
                 {
                     ID = table.Column<string>(type: "NVARCHAR2(450)", nullable: false),
@@ -29,7 +29,7 @@ namespace DOOR.Server.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ASP_NET_USERS",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 columns: table => new
                 {
                     ID = table.Column<string>(type: "NVARCHAR2(450)", nullable: false),
@@ -55,7 +55,7 @@ namespace DOOR.Server.Migrations
 
             migrationBuilder.CreateTable(
                 name: "DEVICE_CODES",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 columns: table => new
                 {
                     USER_CODE = table.Column<string>(type: "NVARCHAR2(200)", maxLength: 200, nullable: false),
@@ -75,7 +75,7 @@ namespace DOOR.Server.Migrations
 
             migrationBuilder.CreateTable(
                 name: "KEYS",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 columns: table => new
                 {
                     ID = table.Column<string>(type: "NVARCHAR2(450)", nullable: false),
@@ -94,7 +94,7 @@ namespace DOOR.Server.Migrations
 
             migrationBuilder.CreateTable(
                 name: "PERSISTED_GRANTS",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 columns: table => new
                 {
                     KEY = table.Column<string>(type: "NVARCHAR2(200)", maxLength: 200, nullable: false),
@@ -115,7 +115,7 @@ namespace DOOR.Server.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ASP_NET_ROLE_CLAIMS",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "NUMBER(10)", nullable: false)
@@ -130,7 +130,7 @@ namespace DOOR.Server.Migrations
                     table.ForeignKey(
                         name: "FK_ASP_NET_ROLE_CLAIMS_ASP_NET_ROLES_ROLE_ID",
                         column: x => x.ROLE_ID,
-                        principalSchema: "DOOR",
+                        principalSchema: "DOOR_USER",
                         principalTable: "ASP_NET_ROLES",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -138,7 +138,7 @@ namespace DOOR.Server.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ASP_NET_USER_CLAIMS",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "NUMBER(10)", nullable: false)
@@ -153,7 +153,7 @@ namespace DOOR.Server.Migrations
                     table.ForeignKey(
                         name: "FK_ASP_NET_USER_CLAIMS_ASP_NET_USERS_USER_ID",
                         column: x => x.USER_ID,
-                        principalSchema: "DOOR",
+                        principalSchema: "DOOR_USER",
                         principalTable: "ASP_NET_USERS",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -161,7 +161,7 @@ namespace DOOR.Server.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ASP_NET_USER_LOGINS",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 columns: table => new
                 {
                     LOGIN_PROVIDER = table.Column<string>(type: "NVARCHAR2(128)", maxLength: 128, nullable: false),
@@ -175,7 +175,7 @@ namespace DOOR.Server.Migrations
                     table.ForeignKey(
                         name: "FK_ASP_NET_USER_LOGINS_ASP_NET_USERS_USER_ID",
                         column: x => x.USER_ID,
-                        principalSchema: "DOOR",
+                        principalSchema: "DOOR_USER",
                         principalTable: "ASP_NET_USERS",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -183,7 +183,7 @@ namespace DOOR.Server.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ASP_NET_USER_ROLES",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 columns: table => new
                 {
                     USER_ID = table.Column<string>(type: "NVARCHAR2(450)", nullable: false),
@@ -195,14 +195,14 @@ namespace DOOR.Server.Migrations
                     table.ForeignKey(
                         name: "FK_ASP_NET_USER_ROLES_ASP_NET_ROLES_ROLE_ID",
                         column: x => x.ROLE_ID,
-                        principalSchema: "DOOR",
+                        principalSchema: "DOOR_USER",
                         principalTable: "ASP_NET_ROLES",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ASP_NET_USER_ROLES_ASP_NET_USERS_USER_ID",
                         column: x => x.USER_ID,
-                        principalSchema: "DOOR",
+                        principalSchema: "DOOR_USER",
                         principalTable: "ASP_NET_USERS",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -210,7 +210,7 @@ namespace DOOR.Server.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ASP_NET_USER_TOKENS",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 columns: table => new
                 {
                     USER_ID = table.Column<string>(type: "NVARCHAR2(450)", nullable: false),
@@ -224,7 +224,7 @@ namespace DOOR.Server.Migrations
                     table.ForeignKey(
                         name: "FK_ASP_NET_USER_TOKENS_ASP_NET_USERS_USER_ID",
                         column: x => x.USER_ID,
-                        principalSchema: "DOOR",
+                        principalSchema: "DOOR_USER",
                         principalTable: "ASP_NET_USERS",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -232,13 +232,13 @@ namespace DOOR.Server.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_ASP_NET_ROLE_CLAIMS_ROLE_ID",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "ASP_NET_ROLE_CLAIMS",
                 column: "ROLE_ID");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "ASP_NET_ROLES",
                 column: "NORMALIZED_NAME",
                 unique: true,
@@ -246,31 +246,31 @@ namespace DOOR.Server.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_ASP_NET_USER_CLAIMS_USER_ID",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "ASP_NET_USER_CLAIMS",
                 column: "USER_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ASP_NET_USER_LOGINS_USER_ID",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "ASP_NET_USER_LOGINS",
                 column: "USER_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ASP_NET_USER_ROLES_ROLE_ID",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "ASP_NET_USER_ROLES",
                 column: "ROLE_ID");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "ASP_NET_USERS",
                 column: "NORMALIZED_EMAIL");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "ASP_NET_USERS",
                 column: "NORMALIZED_USER_NAME",
                 unique: true,
@@ -278,44 +278,44 @@ namespace DOOR.Server.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_DEVICE_CODES_DEVICE_CODE",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "DEVICE_CODES",
                 column: "DEVICE_CODE",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_DEVICE_CODES_EXPIRATION",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "DEVICE_CODES",
                 column: "EXPIRATION");
 
             migrationBuilder.CreateIndex(
                 name: "IX_KEYS_USE",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "KEYS",
                 column: "USE");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PERSISTED_GRANTS_CONSUMED_TIME",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "PERSISTED_GRANTS",
                 column: "CONSUMED_TIME");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PERSISTED_GRANTS_EXPIRATION",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "PERSISTED_GRANTS",
                 column: "EXPIRATION");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PERSISTED_GRANTS_SUBJECT_ID_CLIENT_ID_TYPE",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "PERSISTED_GRANTS",
                 columns: new[] { "SUBJECT_ID", "CLIENT_ID", "TYPE" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PERSISTED_GRANTS_SUBJECT_ID_SESSION_ID_TYPE",
-                schema: "DOOR",
+                schema: "DOOR_USER",
                 table: "PERSISTED_GRANTS",
                 columns: new[] { "SUBJECT_ID", "SESSION_ID", "TYPE" });
         }
@@ -324,43 +324,43 @@ namespace DOOR.Server.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ASP_NET_ROLE_CLAIMS",
-                schema: "DOOR");
+                schema: "DOOR_USER");
 
             migrationBuilder.DropTable(
                 name: "ASP_NET_USER_CLAIMS",
-                schema: "DOOR");
+                schema: "DOOR_USER");
 
             migrationBuilder.DropTable(
                 name: "ASP_NET_USER_LOGINS",
-                schema: "DOOR");
+                schema: "DOOR_USER");
 
             migrationBuilder.DropTable(
                 name: "ASP_NET_USER_ROLES",
-                schema: "DOOR");
+                schema: "DOOR_USER");
 
             migrationBuilder.DropTable(
                 name: "ASP_NET_USER_TOKENS",
-                schema: "DOOR");
+                schema: "DOOR_USER");
 
             migrationBuilder.DropTable(
                 name: "DEVICE_CODES",
-                schema: "DOOR");
+                schema: "DOOR_USER");
 
             migrationBuilder.DropTable(
                 name: "KEYS",
-                schema: "DOOR");
+                schema: "DOOR_USER");
 
             migrationBuilder.DropTable(
                 name: "PERSISTED_GRANTS",
-                schema: "DOOR");
+                schema: "DOOR_USER");
 
             migrationBuilder.DropTable(
                 name: "ASP_NET_ROLES",
-                schema: "DOOR");
+                schema: "DOOR_USER");
 
             migrationBuilder.DropTable(
                 name: "ASP_NET_USERS",
-                schema: "DOOR");
+                schema: "DOOR_USER");
         }
     }
 }

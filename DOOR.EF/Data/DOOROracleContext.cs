@@ -29,12 +29,13 @@ namespace DOOR.EF.Data
         public virtual DbSet<Key> Keys { get; set; } = null!;
         public virtual DbSet<OraTranslateMsg> OraTranslateMsgs { get; set; } = null!;
         public virtual DbSet<PersistedGrant> PersistedGrants { get; set; } = null!;
+        public virtual DbSet<School> Schools { get; set; } = null!;
         public virtual DbSet<Section> Sections { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("DOOR")
+            modelBuilder.HasDefaultSchema("DOOR_USER")
                 .UseCollation("USING_NLS_COMP");
 
             modelBuilder.Entity<AspNetUser>(entity =>
@@ -71,8 +72,10 @@ namespace DOOR.EF.Data
 
             modelBuilder.Entity<Course>(entity =>
             {
-                entity.HasKey(e => e.CourseNo)
-                    .HasName("CRSE_PK");
+                entity.HasKey(e => new { e.CourseNo, e.SchoolId })
+                    .HasName("COURSE_PK");
+
+                entity.Property(e => e.CourseNo).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CreatedBy).ValueGeneratedOnAdd();
 
@@ -82,16 +85,22 @@ namespace DOOR.EF.Data
 
                 entity.Property(e => e.ModifiedDate).ValueGeneratedOnAdd();
 
+                entity.HasOne(d => d.School)
+                    .WithMany(p => p.Courses)
+                    .HasForeignKey(d => d.SchoolId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("COURSE_FK2");
+
                 entity.HasOne(d => d.PrerequisiteNavigation)
                     .WithMany(p => p.InversePrerequisiteNavigation)
-                    .HasForeignKey(d => d.Prerequisite)
-                    .HasConstraintName("CRSE_CRSE_FK");
+                    .HasForeignKey(d => new { d.Prerequisite, d.PrerequisiteSchoolId })
+                    .HasConstraintName("COURSE_FK1");
             });
 
             modelBuilder.Entity<Enrollment>(entity =>
             {
-                entity.HasKey(e => new { e.StudentId, e.SectionId })
-                    .HasName("ENR_PK");
+                entity.HasKey(e => new { e.SectionId, e.StudentId, e.SchoolId })
+                    .HasName("ENROLLMENT_PK");
 
                 entity.Property(e => e.CreatedBy).ValueGeneratedOnAdd();
 
@@ -101,26 +110,58 @@ namespace DOOR.EF.Data
 
                 entity.Property(e => e.ModifiedDate).ValueGeneratedOnAdd();
 
-                entity.HasOne(d => d.Section)
+                entity.HasOne(d => d.School)
                     .WithMany(p => p.Enrollments)
-                    .HasForeignKey(d => d.SectionId)
+                    .HasForeignKey(d => d.SchoolId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("ENR_SECT_FK");
+                    .HasConstraintName("ENROLLMENT_FK3");
 
-                entity.HasOne(d => d.Student)
+                entity.HasOne(d => d.S)
                     .WithMany(p => p.Enrollments)
-                    .HasForeignKey(d => d.StudentId)
+                    .HasForeignKey(d => new { d.SectionId, d.SchoolId })
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("ENR_STU_FK");
+                    .HasConstraintName("ENROLLMENT_FK1");
+
+                entity.HasOne(d => d.SNavigation)
+                    .WithMany(p => p.Enrollments)
+                    .HasForeignKey(d => new { d.StudentId, d.SchoolId })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("ENROLLMENT_FK2");
             });
 
             modelBuilder.Entity<OraTranslateMsg>(entity =>
             {
                 entity.Property(e => e.OraTranslateMsgId).HasDefaultValueSql("sys_guid()");
+
+                entity.Property(e => e.CreatedBy).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.CreatedDate).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ModifiedBy).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ModifiedDate).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<School>(entity =>
+            {
+                entity.Property(e => e.SchoolId).ValueGeneratedNever();
+
+                entity.Property(e => e.CreatedBy).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.CreatedDate).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ModifiedBy).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ModifiedDate).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<Section>(entity =>
             {
+                entity.HasKey(e => new { e.SectionId, e.SchoolId })
+                    .HasName("SECTION_PK");
+
+                entity.Property(e => e.SectionId).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.CreatedBy).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CreatedDate).ValueGeneratedOnAdd();
@@ -129,15 +170,26 @@ namespace DOOR.EF.Data
 
                 entity.Property(e => e.ModifiedDate).ValueGeneratedOnAdd();
 
-                entity.HasOne(d => d.CourseNoNavigation)
+                entity.HasOne(d => d.School)
                     .WithMany(p => p.Sections)
-                    .HasForeignKey(d => d.CourseNo)
+                    .HasForeignKey(d => d.SchoolId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("SECT_CRSE_FK");
+                    .HasConstraintName("SECTION_FK2");
+
+                entity.HasOne(d => d.Course)
+                    .WithMany(p => p.Sections)
+                    .HasForeignKey(d => new { d.CourseNo, d.SchoolId })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("SECTION_FK1");
             });
 
             modelBuilder.Entity<Student>(entity =>
             {
+                entity.HasKey(e => new { e.StudentId, e.SchoolId })
+                    .HasName("STUDENT_PK");
+
+                entity.Property(e => e.StudentId).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.CreatedBy).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CreatedDate).ValueGeneratedOnAdd();
@@ -145,6 +197,12 @@ namespace DOOR.EF.Data
                 entity.Property(e => e.ModifiedBy).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.ModifiedDate).ValueGeneratedOnAdd();
+
+                entity.HasOne(d => d.School)
+                    .WithMany(p => p.Students)
+                    .HasForeignKey(d => d.SchoolId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("STUDENT_FK1");
             });
 
             modelBuilder.HasSequence("COURSE_SEQ");
