@@ -16,6 +16,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDbContext<DOOROracleContext>(options =>
     options.UseOracle(connectionString));
 
+var optionsBuilder = new DbContextOptionsBuilder<DOOROracleContext>();
+optionsBuilder.UseOracle(connectionString);
+
+builder.Services.AddSingleton(new OraTransMsgs((optionsBuilder.Options)));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
