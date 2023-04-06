@@ -14,6 +14,9 @@ Scaffold-DbContext "Data Source=3.80.81.224:1521/SPRING2023PDB;User ID=DOOR_USER
 For Mac Users,  you have to run the CLI
 commands:
 
+First, install DOTNET EF in CLI:
+dotnet tool install --global dotnet-ef --version 6.0.15
+
 https://www.entityframeworktutorial.net/efcore/cli-commands-for-ef-core-migration.aspx
 
 Example...
