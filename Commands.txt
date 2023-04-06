@@ -24,3 +24,12 @@ instead of add-migration initial
 it is:
 dotnet ef migrations add initial
 
+For Mac:
+Install .net 6.0 CLI, start the CLI
+Install EF:
+dotnet tool install --global dotnet-ef --version 6.0.15
+CD to root of project
+Add package 
+Microsoft.EntityFrameworkCore.Design to EF project
+
+dotnet ef dbcontext scaffold "Data Source=3.80.81.224:1521/SPRING2023PDB;User ID=UD_BRAGUI;Password=UD_BRAGUI" Oracle.EntityFrameworkCore --output-dir Models --context-dir Data --project "DOOR.EF" --context "DOOROracleContext" --data-annotations --force
