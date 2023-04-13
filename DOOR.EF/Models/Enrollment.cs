@@ -11,6 +11,11 @@ namespace DOOR.EF.Models
     [Index("SectionId", Name = "ENR_SECT_FK_I")]
     public partial class Enrollment
     {
+        public Enrollment()
+        {
+            Grades = new HashSet<Grade>();
+        }
+
         [Key]
         [Column("STUDENT_ID")]
         [Precision(8)]
@@ -50,5 +55,7 @@ namespace DOOR.EF.Models
         [ForeignKey("SchoolId")]
         [InverseProperty("Enrollments")]
         public virtual School School { get; set; } = null!;
+        [InverseProperty("S")]
+        public virtual ICollection<Grade> Grades { get; set; }
     }
 }
